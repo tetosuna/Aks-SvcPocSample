@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:28648",
+      "sslPort": 44337
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "weatherforecast",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "GwWebApi01": {
+      "commandName": "Project",
+      "launchUrl": "weatherforecast",
+      "applicationUrl": "http://localhost:5001",
+      "environmentVariables": {
+        "TOPIC": "accident",
+        "ApplicationInsights_InstrumentationKey": "8a86d23f-ecc4-4f0c-a78a-ca6ed18de4cb",
+        "BROKER_LIST": "0.0.0.0:9092",
+        "Log_Level": "Error"
+      }
+    }
+  }
+}

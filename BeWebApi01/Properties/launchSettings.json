@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:31797",
+      "sslPort": 44301
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "weatherforecast",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "BeWebApi01": {
+      "commandName": "Project",
+      "launchUrl": "weatherforecast",
+      "applicationUrl": "http://localhost:50002",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "dbConnectionString": "Server=localhost;Database=master;User ID=sa;Password=P@ssw0rd;initial catalog=dotnetsample;MultipleActiveResultSets=True;App=EntityFramework;",
+        "ApplicationInsights_InstrumentationKey": "8a86d23f-ecc4-4f0c-a78a-ca6ed18de4cb"
+      }
+    }
+  }
+}

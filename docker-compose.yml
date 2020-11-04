@@ -1,0 +1,74 @@
+version: '3.4'
+
+services:
+  gwproxy:
+    build:
+      context: ./nginx-docker
+    environment:
+      BACKEND_HOST: "gwwebapi:80"
+      WORKER_PROCESSES: "1"
+      WORKER_CONNECTIONS: "1024"
+    ports: 
+      - "80:80"
+    depends_on:
+      - gwwebapi
+  gwwebapi:
+    build:
+      context: .
+      dockerfile: ./GwWebApi01/Dockerfile
+    environment:
+      BROKER_LIST: "kafka:9092"
+      TOPIC: "accident1"
+      ApplicationInsights_InstrumentationKey: ""
+      Log_Level: "Information"
+    depends_on:
+      - kafka
+  kafka:
+    build: ./kafka-docker
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: ${DOCKERHOST:-0.0.0.0}
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  gwfunction:
+    build:
+      context: .
+      dockerfile: ./GwFunc01/Dockerfile
+    environment:
+      LD_LIBRARY_PATH: "/home/site/wwwroot/bin/runtimes/linux-x64/native"
+      BROKER_LIST: "kafka:9092"
+      TOPIC: "accident1"
+      CONSUMER_GROUP: "GwFunction"
+      BackEnd_URL: "http://beproxy/api/AccidentHistory"
+      ApplicationInsights_InstrumentationKey: ""
+      Log_Level: "Information"
+    depends_on:
+      - kafka
+  beproxy:
+    build:
+      context: ./nginx-docker
+    environment:
+      BACKEND_HOST: "bewebapi:80"
+      WORKER_PROCESSES: "1"
+      WORKER_CONNECTIONS: "1024"
+    depends_on:
+      - bewebapi
+  bewebapi:
+    build:
+      context: .
+      dockerfile: ./BeWebApi01/Dockerfile
+    environment:
+      dbConnectionString: "Server=tcp:<dbserver fqdn>,1433;Initial Catalog=<database name>;Persist Security Info=False;User ID=<user>;Password=<password>;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+      ApplicationInsights_InstrumentationKey: ""
+      Log_Level: "Information"
+
+networks:
+  default:
+    name: aks-poc-net1
