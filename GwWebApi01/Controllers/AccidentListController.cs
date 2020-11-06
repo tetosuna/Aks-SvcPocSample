@@ -33,7 +33,7 @@ namespace GwWebApi01.Controllers
             topic = _configuration.GetValue<string>("TOPIC");
         }
 
-        // POST api/Accident
+        // POST api/AccidentList
         [HttpPost]
         public StatusCodeResult Post([FromBody]RootObject rootObject)
         {
@@ -64,6 +64,20 @@ namespace GwWebApi01.Controllers
                 return StatusCode(500);
             }
             return StatusCode(200);
+        }
+        // Get api/AccidentList for probe request send by application gateway
+        [HttpGet]
+        public string Get()
+        {
+            try
+            {
+                _logger.LogInformation("requet receive");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.InnerException.Message);
+            }
+            return "api/AccidentList";
         }
     }
 }
