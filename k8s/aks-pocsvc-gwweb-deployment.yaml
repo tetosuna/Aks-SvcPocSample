@@ -33,7 +33,7 @@ spec:
         - name: ApplicationInsights_InstrumentationKey
           valueFrom:
             secretKeyRef:
-              name: aks-pocsvc-gwweb-secret
+              name: aks-func-keyvault
               key: ApplicationInsights_InstrumentationKey
         - name: Log_Level
           value: Information
