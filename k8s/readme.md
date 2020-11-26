@@ -254,6 +254,13 @@ kubectl -n ${SVC_NAMESPACE} apply -f aks-pocsvc-pod-identity.yaml
             volumeAttributes:
               secretProviderClass: "aks-poc-secret-provider"
       dnsPolicy: ClusterFirst
+
+ScaledObjectにKafkaの情報を追記
+# kubectl -n ${SVC_NAMESPACE} edit ScaledObject aks-pocsvc-gwfunc
+編集: Kafkaの情報を追記
+      brokerList: '10.0.x.x:9092'
+      consumerGroup: 'GwFunction'
+      topic: 'accident'
 ~~~
 
 ## その他deployment作成
