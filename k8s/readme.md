@@ -225,6 +225,7 @@ kubectl -n ${SVC_NAMESPACE} apply -f aks-pocsvc-pod-identity.yaml
 
 ~~~
 # cd GwFunc01
+# func kubernetes install --namespace keda 
 # func kubernetes deploy --name aks-pocsvc-gwfunc --namespace ${SVC_NAMESPACE} --image-name funcregistry.azurecr.io/aks_pocsvc_gwfunc:latest --secret-name aks-pocsvc-gwfunc-secret --min-replicas 1
 # kubectl -n ${SVC_NAMESPACE} edit deploy aks-pocsvc-gwfunc
 編集1: labelの追加
