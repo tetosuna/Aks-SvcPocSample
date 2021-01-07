@@ -225,6 +225,7 @@ kubectl -n ${SVC_NAMESPACE} apply -f aks-pocsvc-pod-identity.yaml
 
 ~~~
 # cd GwFunc01
+# func kubernetes install --namespace keda 
 # func kubernetes deploy --name aks-pocsvc-gwfunc --namespace ${SVC_NAMESPACE} --image-name funcregistry.azurecr.io/aks_pocsvc_gwfunc:latest --secret-name aks-pocsvc-gwfunc-secret --min-replicas 1
 # kubectl -n ${SVC_NAMESPACE} edit deploy aks-pocsvc-gwfunc
 編集1: labelの追加
@@ -254,6 +255,13 @@ kubectl -n ${SVC_NAMESPACE} apply -f aks-pocsvc-pod-identity.yaml
             volumeAttributes:
               secretProviderClass: "aks-poc-secret-provider"
       dnsPolicy: ClusterFirst
+
+ScaledObjectにKafkaの情報を追記
+# kubectl -n ${SVC_NAMESPACE} edit ScaledObject aks-pocsvc-gwfunc
+編集: Kafkaの情報を追記
+      brokerList: '10.0.x.x:9092'
+      consumerGroup: 'GwFunction'
+      topic: 'accident'
 ~~~
 
 ## その他deployment作成
